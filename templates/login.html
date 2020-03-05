@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro</title>
+    </head>
+    <body>
+        {% if mensagem != '' %}
+            <h2>{{mensagem}}</h2>
+        {% endif %}
+        <p>Escolha a opção que você quer:</p>
+        <p><a href="/cliente">Listar clientes</a></p>
+        <p><a href="/produto">Listar produtos</a></p>
+        <p><a href="/cliente/novo">Cadastrar cliente</a></p>
+        <p><a href="/produto/novo">Cadastrar produto</a></p>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastrar Local</title>
+        <script src="js/register_area.js"">
+        </script>
+    </head>
+    <body>
+        <form action="/produto/{{id_produto}}" method="POST" id="form_principal">
+            {% if id_produto != 'novo'%}
+                <p>
+                    <label>Id:</label>
+                    {{id_produto}}
+                </p>
+            {% endif %}
+            <p>
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" name="descricao" autocomplete="off" value="{{descricao}}" />
+            </p>
+            <p>
+                <label for="cliente">Cliente:</label>
+                <select name="id_cliente" id="cliente">
+                    <option value="escolha">Escolha...</option>
+                    {% for cliente in clientes %}
+                        <option value="{{cliente['id_cliente']}}" {% if id_cliente == cliente['id_cliente'] %}selected="selected"{% endif %}>{{cliente['nome']}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <button type="button" onclick="javascript:salvar();">Salvar</button>
+                {% if id_produto != 'novo' %}<button type="button" onclick="javascript:excluir();">Excluir</button>{% endif %}
+            </p>
+        </form>
+        <p><a href="/">Voltar</a></p>
+        {% if id_produto != 'novo' %}<form action="/produto/{{id_produto}}" id="delt" method="DELETE" style="display: none"></form>{% endif %}
+    </body>
+</html>

@@ -1,0 +1,11 @@
+Desafio: Utilizando Flask, SQL e Jinja 2, desenvolva um pequeno site de CRUD que cadastre:
+
+Cliente
+- id_cliente
+- nome
+- sexo ('M' ou 'F')
+
+Produto
+- id_produto
+- descricao
+- id_cliente
