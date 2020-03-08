@@ -31,10 +31,10 @@ class Area:
     @staticmethod
     def cria_tupla(registro):
         try:
-                id = registro[0] 
-                id_status = registro[1]
-                dt_adicao = registro[2]
-                dt_atualizacao = registro[3]
+            id = registro[0] 
+            id_status = registro[1]
+            dt_adicao = registro[2]
+            dt_atualizacao = registro[3]
             return Area(id=id, id_status=id_status, dt_adicao=dt_adicao,dt_atualizacao=dt_atualizacao)
         except Exception as e:
                 print('Erro ao criar Area')

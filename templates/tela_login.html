@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fazer Login</title>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!--CSS-->
+        <link rel="stylesheet" href="css/login.css">
+        <!--AJAX-->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://www.json.org/json2.js"></script>
+     
+        <script type="text/javascript">
+            function validar(usuario, senha) {
+                if (usuario.value === '') {
+                    alert("Preencha o nome de usuario.");
+                    return false;
+                }
+                if (senha.value === '') {
+                    alert("Preencha a senha.");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function salvar() {
+                const usuario = document.getElementById('usuario');
+                const senha = document.getElementById('senha');
+                var url = "http://localhost:5000/login";
+                var metodo = "POST";
+                if (!validar(usuario, senha)) return;
+                var data = JSON.stringify({"usuario": usuario.value, "senha": senha.value});
+                envia_request(metodo, url, data)
+                .then(responseData => {
+                    console.log(responseData)
+                    window.location = "/menu";
+                })
+                .catch(err => {
+                    if (err == 403){
+                        alert("Usuário ou senha incorretos")
+                    }
+                });
+            }
+            
+            function envia_request(metodo, url, dados){
+                const promise = new Promise((resolve, reject) => {
+                    console.log(dados);
+                    const xhr = new XMLHttpRequest();
+                    xhr.open(metodo, url);
+
+                    if (dados){
+                        xhr.setRequestHeader("Content-Type", "application/json")
+                    };
+
+                    //Arrow function que recebe a resposta da requisição HTTP
+                    xhr.onload = () => {
+                        if (xhr.status == 403){
+                            reject(xhr.status);
+                        }
+                        resolve(xhr.response);
+                    };
+                    //Arrow function que trata erros HTTP
+                    xhr.onerror = () => {
+
+                        reject("Algo deu errado!");
+                    };
+
+                    xhr.send(dados);
+
+                }
+                );
+                return promise;
+            }
+
+        </script>
+    </head>
+    <body class="eletronica_background">
+        <div class="d-flex p-5 m-5 justify-content-center semi_trans_logo">
+            <img src = "css/imgs/308b24594815099c8405935e820ce044.png">
+        </div>
+        <div class="container p-5 my-5 semi_trans_bg rounded align-self-center w-50">
+            <form action="/login" method="POST" id="form_principal">
+                <div class="form-group">
+                    <label for="usuario">Usuário:</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" autocomplete="off" value="{{usuario}}" />
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" class="form-control" id="senha" name="senha" autocomplete="off" value="{{senha}}" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success" onclick="javascript:salvar();">Salvar</button>
+                </div>
+            </form>
+        </div>
+            <!--Coisas do Bootstrap-->
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>

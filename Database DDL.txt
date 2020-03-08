@@ -1,0 +1,100 @@
+            CREATE table if not exists tb_areas( 
+              id             TEXT       primary key
+            , id_status      INTEGER    NOT NULL
+            , dt_adicao      TEXT       NOT NULL
+            , dt_atualizacao TEXT       NOT NULL
+            );
+           
+         
+            CREATE index if not exists idx_areas 
+            ON tb_areas(id);
+           
+            CREATE TABLE IF NOT EXISTS tb_pessoas( 
+              id              serial primary key 
+            , nome            TEXT         NOT NULL
+            , cpf_cnpj        TEXT         NOT NULL
+            , tipo            INTEGER      NOT NULL
+            , rua             TEXT
+            , bairro          TEXT
+            , numero          TEXT
+            , complemento     TEXT
+            , telefone        TEXT
+            , site            TEXT
+            , email           TEXT
+            , id_status       INTEGER      NOT NULL
+            , dt_adicao       TEXT         NOT NULL
+            , dt_atualizacao  TEXT         NOT NULL
+            )
+            
+            
+            CREATE index if not exists idx_pessoas 
+            ON tb_pessoas(id);
+
+           CREATE TABLE IF NOT EXISTS tb_materiais( 
+            id                serial PRIMARY KEY 
+            , descricao       VARCHAR(25)  NOT NULL
+            , custo           REAL         NOT NULL
+            , vendedor        INTEGER      NOT NULL
+            , fabricante      INTEGER      NOT NULL
+            , unidade_medida  TEXT         NOT NULL
+            , grupo           INTEGER      NOT NULL
+            , alimentacao     INTEGER
+            , capacidade      INTEGER
+            , resistencia     INTEGER
+            , id_status       INTEGER      NOT NULL
+            , dt_adicao       TEXT         NOT NULL
+            , dt_atualizacao  TEXT         NOT NULL
+            ,CONSTRAINT fk_material_vendedor   FOREIGN KEY(vendedor)     REFERENCES tb_pessoas(id)
+            ,CONSTRAINT fk_material_fabricante FOREIGN KEY(fabricante)   REFERENCES tb_pessoas(id)
+            );
+
+           CREATE index if not exists idx_materiais 
+            ON tb_materiais(id);            
+
+           CREATE TABLE IF NOT EXISTS tb_estoque( 
+              area            TEXT          NOT NULL
+            , item            INTEGER       NOT NULL
+            , quantidade      INTEGER       NOT NULL
+            , id_status       INTEGER       NOT NULL
+            , dt_adicao       TEXT          NOT NULL
+            , dt_atualizacao  TEXT          NOT NULL
+            ,CONSTRAINT fk_estoque_area   FOREIGN KEY(area)     REFERENCES tb_areas(id)
+            ,CONSTRAINT fk_estoque_item   FOREIGN KEY(item)     REFERENCES tb_materiais(id)
+            );
+           
+            CREATE index if not exists idx_estoque 
+            ON tb_estoque(area, item);
+
+           CREATE TABLE IF NOT EXISTS tb_transacao( 
+              id              serial PRIMARY KEY
+            , item			  INTEGER       NOT NULL   
+            , area    		  TEXT          NOT NULL
+            , cliente 		  INTEGER       NOT NULL
+            , quantidade      INTEGER       NOT NULL
+            , tipo            INTEGER       NOT NULL
+            , dt_adicao       TEXT          NOT NULL
+            , dt_atualizacao  TEXT          NOT NULL
+            ,CONSTRAINT fk_transacao_area   	FOREIGN KEY(area)     REFERENCES tb_areas(id)
+			,CONSTRAINT fk_transacao_item   	FOREIGN KEY(item)     REFERENCES tb_materiais(id)
+			,CONSTRAINT fk_transacao_cliente	FOREIGN KEY(cliente)  REFERENCES tb_pessoas(id)			
+            );
+           
+            CREATE index if not exists idx_transacao 
+            ON tb_transacao(id);
+
+           CREATE TABLE IF NOT EXISTS tb_usuarios( 
+              id            serial PRIMARY KEY
+            , usuario       TEXT          NOT NULL
+            , senha         TEXT          NOT NULL
+            , email         TEXT          NOT NULL			
+            );
+            INSERT INTO tb_usuarios( 
+              usuario
+            , senha
+            , email
+            )
+            VALUES(
+              'admin'
+            , 'admin'
+            , 'admin@protostock.com.br'
+            )

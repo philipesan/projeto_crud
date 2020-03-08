@@ -1,4 +1,7 @@
-from service.service_user import fazer_login
+from infra.dao.dao_area import listar, localizar
+from infra.dao.dao_user import logar
 
-usuario_login = [{"usuario":"admin", "senha":"admin"}]
-fazer_login(usuario_login)
+teste = localizar()
+##teste = logar("admin", "admin")
+print(teste)
+

@@ -14,6 +14,3 @@ def fazer_login(usuario_login):
         print('Erro ao Fazer Login')
         print(e)
 
-
-usuario_login = [{"usuario":"teste", "senha":"teste"}]
-fazer_login(usuario_login)

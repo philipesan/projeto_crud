@@ -1,9 +1,13 @@
-import sqlite3
+import psycopg2
 from models.model_user import Usuario
 
 ##Método para realizar login no sistema
 def logar(usuario, senha):
-    con = sqlite3.connect('database.db')
+    con = psycopg2.connect(user = "postgres",
+                            password = "admin",
+                            host = "localhost",
+                            port = "5432",
+                            database = "CrudApplication") 
     cur = con.cursor()   
     sql = (f'''
             SELECT 
