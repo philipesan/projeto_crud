@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from login_api import login_app
 from area_api import area_app
-import sqlite3
 import os
 
 app = Flask(__name__)

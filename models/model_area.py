@@ -12,6 +12,7 @@ class Area:
         d['id_status'] = self.id_status
         d['dt_adicao'] = self.dt_adicao
         d['dt_atualizacao'] = self.dt_atualizacao
+        return d
 
     ##Método que cria a tupla que será inserida no banco de dados
     @staticmethod

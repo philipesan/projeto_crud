@@ -1,0 +1,19 @@
+.eletronica_background {
+    background-image: url('imgs/background.jpg'); /* The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: 500px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+.semi_trans_bg {
+    background-color: rgba(105, 105, 105, 0.842);
+    
+}
+
+.semi_trans_logo {
+    background-color: rgba(51, 51, 51, 0.582);
+    color: green;
+    
+}

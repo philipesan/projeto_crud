@@ -12,7 +12,10 @@ def localizar(area = None, status = None):
     cur = con.cursor()   
     sql = (f'''
             SELECT 
-                *
+                    id
+                ,   id_status
+                ,   TO_CHAR(dt_adicao, 'dd/mm/yyyy')                
+                ,   TO_CHAR(dt_atualizacao, 'dd/mm/yyyy')
             FROM tb_areas
             WHERE 1=1
             ''')
@@ -22,8 +25,9 @@ def localizar(area = None, status = None):
         sql = sql + (f"\n AND id_status = '{status}'")
 
     cur.execute(sql)
-
     areas = cur.fetchall()
+    areas = [Area.cria_tupla(linha) \
+       for linha in areas]
 
     con.close()
     return areas
@@ -31,7 +35,7 @@ def localizar(area = None, status = None):
 ##Método que localiza áreas no banco de dados
 def listar():
     areas = []
-    con = psycopg2.connect(user = "admin",
+    con = psycopg2.connect(user = "postgres",
                             password = "admin",
                             host = "localhost",
                             port = "5432",
@@ -39,18 +43,63 @@ def listar():
     cur = con.cursor()   
     sql = (f'''
             SELECT 
-                *
+                    id
+                ,   id_status
+                ,   TO_CHAR(dt_adicao, 'dd/mm/yyyy')                
+                ,   TO_CHAR(dt_atualizacao, 'dd/mm/yyyy')
             FROM tb_areas
             WHERE id_status = 0
             ''')
-
     cur.execute(sql)
     areas = cur.fetchall()
-    for row in areas:
-        print("{0} {1} {2}".format(row[0], row[1], row[2]))
-
     areas = [Area.cria_tupla(linha) \
-        for linha in cur.fetchall()]
-
+       for linha in areas]
     con.close()
     return areas
+
+##Método que altera o status das areas no banco de dados
+def alterar(areas):
+    retorno = []
+    con = psycopg2.connect(user = "postgres",
+                            password = "admin",
+                            host = "localhost",
+                            port = "5432",
+                            database = "CrudApplication") 
+    cur = con.cursor()
+    for area in areas:
+        try:   
+            sql = (f"""
+                    UPDATE tb_areas
+                    SET ID_STATUS =
+                        CASE ID_STATUS
+                        when 1
+                        then 0
+                        else 1
+                        end,
+                        dt_atualizacao = current_date
+                    where id = '{area}'
+                """)
+            cur.execute(sql)
+            con.commit()
+        except Exception as e:
+            return e
+    ## Retorna os itens atualizados
+    sql = (f'''
+            SELECT 
+                    id
+                ,   id_status
+                ,   TO_CHAR(dt_adicao, 'dd/mm/yyyy')                
+                ,   TO_CHAR(dt_atualizacao, 'dd/mm/yyyy')
+            FROM tb_areas
+            WHERE id IN (            
+        ''')
+    for area in areas:
+        sql = sql + f"'{area}',"
+    sql = sql + " 'barrel_roll')" 
+    cur.execute(sql)
+    retorno = cur.fetchall()
+    retorno = [Area.cria_tupla(linha) \
+       for linha in retorno]
+
+    con.close()
+    return retorno
