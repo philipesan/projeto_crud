@@ -39,11 +39,12 @@
                     <input type="text" class="form-control mr-sm-2" id="area">
                     <label for="status" class="mr-sm-2">Status:</label>
                     <select id="status" class="form-control mr-sm-2">
+                        <option value="">Todos</option>
                         <option value="0">Ativo</option>
                         <option value="1">Inativo</option>
                       </select>
                       <button type="button" class="btn btn-success mr-sm-2" onclick="javascript:carregaTabela();">Enviar</button>
-                      <button type="button" class="btn btn-danger mr-sm-2" onclick="javascript:deletarSelecionados();">Inativar</button>
+                      <button type="button" class="btn btn-danger mr-sm-2" onclick="javascript:deletarSelecionados();">Alterar</button>
                 </form> 
         </div>
         <hr/>
@@ -55,7 +56,7 @@
                         <td>STATUS</td>
                         <td>DATA DE CRIACAO</td>
                         <td>DATA DE ALTERACAO</td>
-                        <td>INATIVAR</td>
+                        <td>ALTERAR</td>
 
                     </tr>
                 </thead>

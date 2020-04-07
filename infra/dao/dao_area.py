@@ -21,7 +21,7 @@ def localizar(area = None, status = None):
             ''')
     if (area):
         sql = sql + (f"\n AND id = '{area}'")
-    if (status):
+    if (status != None):
         sql = sql + (f"\n AND id_status = '{status}'")
 
     cur.execute(sql)
@@ -48,7 +48,6 @@ def listar():
                 ,   TO_CHAR(dt_adicao, 'dd/mm/yyyy')                
                 ,   TO_CHAR(dt_atualizacao, 'dd/mm/yyyy')
             FROM tb_areas
-            WHERE id_status = 0
             ''')
     cur.execute(sql)
     areas = cur.fetchall()

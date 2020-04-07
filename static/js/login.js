@@ -32,10 +32,8 @@ function salvar() {
 
 function envia_request(metodo, url, dados){
     const promise = new Promise((resolve, reject) => {
-        console.log(dados);
         const xhr = new XMLHttpRequest();
         xhr.open(metodo, url);
-
         if (dados){
             xhr.setRequestHeader("Content-Type", "application/json")
         };

@@ -13,6 +13,8 @@ def localizar_areas(filtros):
 
 ##Service que cria a lista e envia para atualização
 def atualiza_areas(dicionario):
-    lista = [v for v in dicionario.values()]
+    lista = []
+    for item in dicionario:
+        lista.append(item["id"])
     return alterar(lista)
 

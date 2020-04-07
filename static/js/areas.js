@@ -7,11 +7,15 @@ function carregaTabela()
     const request = new XMLHttpRequest();
     const filtroId = document.getElementById("area");
     const filtroStatus = document.getElementById("status");
-    if (filtroId.value) {
+    var requestURL = "http://localhost:5000/areas_listar";
+    if (filtroId.value && filtroStatus.value){
         var requestURL = "http://localhost:5000/areas_localizar/" + filtroId.value + "/" + filtroStatus.value;
     }
-    else {
-        var requestURL = "http://localhost:5000/areas_listar";
+    if (filtroId.value && !filtroStatus.value) {
+        var requestURL = "http://localhost:5000/areas_localizar_id/" + filtroId.value;
+    }
+    if (!filtroId.value && filtroStatus.value) {
+        var requestURL = "http://localhost:5000/areas_localizar_status/" + filtroStatus.value;
     }
     request.open("GET", requestURL);
     request.onload = () => {
@@ -54,18 +58,34 @@ function deletarSelecionados()
     var tabelas = document.getElementById("areas-tabela");
     //Pega todas as checkboxes
     var checkBoxes = tabelas.getElementsByTagName("INPUT");
-    //Mensagem de DEBUG
-    var message = "Itens a serem excluidos: \n";
+    //Cria o JSON como texto
+    var mensagem = [];
     //Loop pelas checkboxes
-    for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
+    for (var i = 0; i < checkBoxes.length; i++) 
+    {
+        if (checkBoxes[i].checked) 
+        {
             var row = checkBoxes[i].parentNode.parentNode;
-            message += row.cells[0].innerHTML;
-            message += "   " + row.cells[1].innerHTML;
-            message += "   " + row.cells[2].innerHTML;
-            message += "\n";
+                mensagem.push({ "id": row.cells[0].innerHTML});
         }
     }
-    //Mostra tudo em um Alert.
-    alert(message);
+    //mensagem += ']';
+    var url = "http://localhost:5000//inativa_areas";
+    var metodo = "PUT";
+    //var dados = JSON.parse(mensagem);
+    var dados = JSON.stringify(mensagem);
+    const request = new XMLHttpRequest();
+    request.open(metodo, url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = () => {
+        try {
+            const json = JSON.parse(request.responseText);
+            populaTabela(json);
+        }
+        catch (e) {
+            alert("Erro no retorno da aplicação");
+            console.warn(e);
+        }
+    }
+    request.send(dados);
 }

@@ -13,8 +13,22 @@ def listar():
     return jsonify(area_dict)
 
 @area_app.route('/areas_localizar/<string:id>/<int:status>', methods=['GET'])
-def localizar(id, status):
+def localizar(id = None, status = None):
     filtros = {"id":id, "status":status}
+    areas_list = service_localizar(filtros)
+    area_dict = [area.__dict__() for area in areas_list]
+    return jsonify(area_dict)
+
+@area_app.route('/areas_localizar_id/<string:id>/', methods=['GET'])
+def localizar_id(id):
+    filtros = {"id":id, "status":None}
+    areas_list = service_localizar(filtros)
+    area_dict = [area.__dict__() for area in areas_list]
+    return jsonify(area_dict)
+
+@area_app.route('/areas_localizar_status/<int:status>/', methods=['GET'])
+def localizar_status(status):
+    filtros = {"id":None, "status":status}
     areas_list = service_localizar(filtros)
     area_dict = [area.__dict__() for area in areas_list]
     return jsonify(area_dict)
@@ -26,6 +40,6 @@ def areas():
 @area_app.route('/inativa_areas', methods=['PUT'])
 def atualiza():
     alteracoes = request.get_json()
-    areas_list = service_atualiza(alteracoes[0])
+    areas_list = service_atualiza(alteracoes)
     area_dict = [area.__dict__() for area in areas_list]
     return jsonify(area_dict)
