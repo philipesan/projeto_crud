@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!--CSS-->
+        <link rel="stylesheet" href="static/css/login.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Areas - Cadastro</title>
+    </head>
+    <body>
+        <!--Navigation Bar-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">PROTOSTOCK</a>
+            
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="/menu">Menu principal</a>
+                </li>
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Dropdown link
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Link 1</a>
+                    <a class="dropdown-item" href="#">Link 2</a>
+                    <a class="dropdown-item" href="#">Link 3</a>
+                </div>
+                </li>
+            </ul>
+        </nav> 
+        <div class="container-fluid p-3 my-3">
+                <br>
+                <div id='mensagem' class></div>
+                <br>
+                <form>
+                    <div class="form-group row">
+                        <p>
+                            <label for="nome" class="col-sm-2 col-form-label">Nome:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="nome" onchange="javascript:checaPreenchido()">
+                            </div>
+                            <label for="custo" class="col-sm-2 col-form-label">Custo:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="custo" onchange="javascript:checaPreenchido()">
+                            </div>
+                        </p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="vendedor" class="col-sm-2 col-form-label">Vendedor:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="vendedor" onchange="javascript:checaPreenchido()">
+                        </div>
+                        <label for="fabricante" class="col-sm-2 col-form-label">Fabricante:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="fabricante" onchange="javascript:checaPreenchido()">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="unidade" class="col-sm-2 col-form-label">Unidade de Medida:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="unidade" onchange="javascript:checaPreenchido()">
+                        </div>
+                        <label for="grupo" class="col-sm-2 col-form-label">Grupo:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="grupo" onchange="javascript:checaPreenchido()">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alimentacao" class="col-sm-2 col-form-label">Alimentação:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="alimentacao" onchange="javascript:checaPreenchido()">
+                        </div>
+                        <label for="capacidade" class="col-sm-2 col-form-label">Capacidade:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="capacidade" onchange="javascript:checaPreenchido()">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="resistencia" class="col-sm-2 col-form-label">Resistência:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="resistencia" onchange="javascript:checaPreenchido()">
+                        </div>
+                    </div>
+                    <p><button type="button" class="btn btn-success mr-sm-2 m-3 p-3" onclick="javascript:realizarCadastro();">Cadastrar</button></p>
+                </form> 
+        </div>
+        <hr/>
+        <!--Coisas do Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <!--Javascript da pagina-->
+        <script src="static/js/areas_cadastro.js"></script>
+    </body>
+</html>

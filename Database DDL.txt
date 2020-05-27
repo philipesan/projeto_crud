@@ -22,8 +22,8 @@
             , site            TEXT
             , email           TEXT
             , id_status       INTEGER      NOT NULL
-            , dt_adicao       TEXT         NOT NULL
-            , dt_atualizacao  TEXT         NOT NULL
+            , dt_adicao       DATE         NOT NULL
+            , dt_atualizacao  DATE         NOT NULL
             )
             
             
@@ -42,8 +42,8 @@
             , capacidade      INTEGER
             , resistencia     INTEGER
             , id_status       INTEGER      NOT NULL
-            , dt_adicao       TEXT         NOT NULL
-            , dt_atualizacao  TEXT         NOT NULL
+            , dt_adicao       DATE         NOT NULL
+            , dt_atualizacao  DATE         NOT NULL
             ,CONSTRAINT fk_material_vendedor   FOREIGN KEY(vendedor)     REFERENCES tb_pessoas(id)
             ,CONSTRAINT fk_material_fabricante FOREIGN KEY(fabricante)   REFERENCES tb_pessoas(id)
             );
@@ -56,8 +56,8 @@
             , item            INTEGER       NOT NULL
             , quantidade      INTEGER       NOT NULL
             , id_status       INTEGER       NOT NULL
-            , dt_adicao       TEXT          NOT NULL
-            , dt_atualizacao  TEXT          NOT NULL
+            , dt_adicao       DATE	    NOT NULL
+            , dt_atualizacao  DATE          NOT NULL
             ,CONSTRAINT fk_estoque_area   FOREIGN KEY(area)     REFERENCES tb_areas(id)
             ,CONSTRAINT fk_estoque_item   FOREIGN KEY(item)     REFERENCES tb_materiais(id)
             );
@@ -72,8 +72,8 @@
             , cliente 		  INTEGER       NOT NULL
             , quantidade      INTEGER       NOT NULL
             , tipo            INTEGER       NOT NULL
-            , dt_adicao       TEXT          NOT NULL
-            , dt_atualizacao  TEXT          NOT NULL
+            , dt_adicao       DATE          NOT NULL
+            , dt_atualizacao  DATE          NOT NULL
             ,CONSTRAINT fk_transacao_area   	FOREIGN KEY(area)     REFERENCES tb_areas(id)
 			,CONSTRAINT fk_transacao_item   	FOREIGN KEY(item)     REFERENCES tb_materiais(id)
 			,CONSTRAINT fk_transacao_cliente	FOREIGN KEY(cliente)  REFERENCES tb_pessoas(id)			
@@ -97,4 +97,13 @@
               'admin'
             , 'admin'
             , 'admin@protostock.com.br'
-            )
+            );
+create table tb_pessoas_tipos (
+	id serial primary key
+	, descricao varchar(10) not null
+	, id_status integer not null
+	, dt_criacao date not null
+	, dt_alteracao date not null
+)
+CREATE index if not exists idx_pessoas_tipos 
+ON tb_pessoas_tipos(id);

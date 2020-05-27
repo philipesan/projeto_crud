@@ -20,10 +20,7 @@ class Area:
         try:
             if "id" in dados:
                 id = dados['id'] 
-                id_status = dados['id_status']
-                dt_adicao = dados['dt_adicao']
-                dt_atualizacao = dados['dt_atualizacao']
-                return Area(id=id, id_status=id_status, dt_adicao=dt_adicao,dt_atualizacao=dt_atualizacao)
+                return Area(id=id)
         except Exception as e:
             print('Erro ao criar Area')
             print(e)

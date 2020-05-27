@@ -1,3 +1,11 @@
+var state = 
+{
+    querySet: '',
+    pagina: 1,
+    linhas: document.getElementById('qtePag').value,
+    janela: 4,
+};
+
 const areasBody = document.querySelector("#areas-tabela > tbody");
 document.addEventListener("DOMContentLoaded", () => {carregaTabela();});
 
@@ -21,7 +29,11 @@ function carregaTabela()
     request.onload = () => {
         try {
             const json = JSON.parse(request.responseText);
-            populaTabela(json);
+            console.log(json);
+            state.querySet = json;
+            state.pagina = 1;
+            state.linhas = document.getElementById('qtePag').value;      
+            populaTabela();
         }
         catch (e) {
             alert("Erro no retorno da aplicação");
@@ -31,8 +43,65 @@ function carregaTabela()
     request.send();
 }
 
+//Função responsável pela paginação
+function Paginacao(querySet, pagina, linhas)
+{
+    var trimStart = (pagina - 1) * linhas;
+    var trimEnd = trimStart + linhas;
+    var trimmedData = querySet.slice(trimStart, trimEnd);
+    var paginas = Math.ceil(querySet.length / linhas);
+    return {
+        'querySet': trimmedData,
+        'paginas': paginas
+    }
+
+}
+
+//Controla os botões da paginação
+function botoesPagina(paginas)
+{
+    var wrapper = document.getElementById('botoesPaginas');
+    wrapper.innerHTML = '';
+
+    var maxEsq = (state.pagina - Math.floor(state.janela / 2));
+    var maxDir = (state.pagina + Math.floor(state.janela / 2));
+
+    if (maxEsq < 1)
+    {
+        maxEsq = 1;
+        maxDir = state.janela;
+    }
+
+    if (maxDir > paginas)
+    {
+        maxEsq = paginas - (state.janela - 1)
+        maxDir = paginas
+            if(maxEsq < 1)
+            {
+                maxEsq = 1
+            }
+    }
+    for(var pagina = maxEsq; pagina <= maxDir; pagina++)
+    {
+        wrapper.innerHTML += `<button value=${pagina} class = "page btn btn-sm btn-success">${pagina}</button>`;
+    }
+    if (state.pagina != 1)
+    {
+        wrapper.innerHTML = `<button value=${1} class = "page btn btn-sm btn-success">Primeiro</button>` + wrapper.innerHTML;
+    }
+    if (state.pagina != paginas)
+    {
+        wrapper.innerHTML += `<button value=${paginas} class = "page btn btn-sm btn-success">Ultimo</button>`;
+    }
+
+    $('.page').on('click', function (){
+        state.pagina = Number($(this).val())
+        populaTabela()
+    })
+}
+
 //Essa função serve para exibir a tabela na tela com os itens que foram carregados
-function populaTabela(json) 
+function populaTabela() 
 {
     //Limpa a tabela HTML
     while(areasBody.firstChild)
@@ -40,8 +109,9 @@ function populaTabela(json)
         areasBody.removeChild(areasBody.firstChild);
     };
     //Popula a tabela
-    console.log(json);
-    json.forEach(function(object) {
+    var dados_pagina = Paginacao(state.querySet, state.pagina, state.linhas);
+    console.log(dados_pagina);
+    dados_pagina.querySet.forEach(function(object) {
     var tr = document.createElement('tr');
     tr.innerHTML = '<td>' + object.id + '</td>' +
     '<td>' + (object.id_status == '0' ? "Ativo": "Inativo") + '</td>' +
@@ -50,6 +120,7 @@ function populaTabela(json)
     '<td><input type="checkbox" id="inativa'+ object.id +'"></td>';
     areasBody.appendChild(tr);
     });
+    botoesPagina(dados_pagina.paginas);
 }
 //Essa função serve para pegar todos os itens que serão inativados
 function deletarSelecionados() 
@@ -80,7 +151,10 @@ function deletarSelecionados()
     request.onload = () => {
         try {
             const json = JSON.parse(request.responseText);
-            populaTabela(json);
+            state.querySet = json; 
+            sstate.linhas = document.getElementById('qtePag').value;
+            state.linhas = 5;   
+            populaTabela();
         }
         catch (e) {
             alert("Erro no retorno da aplicação");

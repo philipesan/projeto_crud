@@ -1,5 +1,5 @@
 from models.model_area import Area
-from infra.dao.dao_area import listar, localizar, alterar
+from infra.dao.dao_area import listar, localizar, alterar, novo
 
 ##Service que busca todos os materiais
 def listar_areas():
@@ -18,3 +18,6 @@ def atualiza_areas(dicionario):
         lista.append(item["id"])
     return alterar(lista)
 
+##Service que registra uma nova area
+def nova_area(area_data):
+    return novo(area_data)
